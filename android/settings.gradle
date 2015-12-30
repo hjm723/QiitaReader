@@ -1,0 +1,3 @@
+rootProject.name = 'QiitaReader'
+
+include ':app'
