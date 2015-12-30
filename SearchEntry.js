@@ -21,7 +21,7 @@ var SearchEntry = React.createClass({
     );
   },
   tagInput: function(e) {
-    this.setstate(
+    this.setState(
       {
         tagName: e.nativeEvent.text,
       }
@@ -48,18 +48,30 @@ var SearchEntry = React.createClass({
     .catch(error => this.setState({errorMessage: error}))
     .done();
   },
-  
+  viewLoadingData: function() {
+    return (
+      <View style={styles.activityIndicators}>
+        <ActivityIndicatorIOS
+          animating={true}
+          size={'large'}
+        />
+        <View>
+          <Text style={styles.loadingMessage}>Please wait a second ...</Text>
+        </View>
+      </View>
+    );
+  },
   render: function() {
     return (
       <View style={styles.container}>
         <View>
           <Text style={styles.instructions}>Search by tags</Text>
           <View>
-            <TextInput style={styles.searchInput} />
+            <TextInput style={styles.searchInput} onChange={this.tagInput}/>
           </View>
         </View>
         <TouchableHighlight style={styles.button} underLayColor='#f1c40f'>
-          <Text style={styles.buttonText}>Search</Text>
+          <Text style={styles.buttonText} onPress={this.searchEntry}>Search</Text>
         </TouchableHighlight>
       </View>
     );
@@ -101,7 +113,13 @@ var styles = StyleSheet.create({
     fontSize: 18,
     color: 'white',
     alignSelf: 'center'
-  }
+  },
+  errorMessage: {
+    fontSize: 15,
+    alignSelf: 'center',
+    marginTop: 15,
+    color: '#FF4500'
+  },
 });
 
 module.exports = SearchEntry;

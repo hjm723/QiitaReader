@@ -27,7 +27,16 @@ var EntryList = React.createClass({
     );
   },
   componentDidMount: function() {
-    this.fetchData();
+    if (typeof this.props.entries !== 'undefined') {
+      this.setState(
+        {
+          dataSource: this.state.dataSource.cloneWithRows(this.props.entries),
+          isLoaded: true
+        }
+      );
+    } else {
+      this.fetchData();
+    }
   },
   fetchData: function() {
     fetch(QIITA_REACTJS_ENTRY_URL)
